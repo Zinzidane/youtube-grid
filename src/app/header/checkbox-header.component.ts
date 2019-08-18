@@ -7,17 +7,15 @@ import {IHeaderAngularComp} from 'ag-grid-angular';
 })
 export class CheckboxHeaderComponent implements OnDestroy, IHeaderAngularComp {
     public params: IHeaderParams;
-    // public sorted: string;
     private elementRef: ElementRef;
     public selected = false;
 
     constructor(elementRef: ElementRef) {
-        this.elementRef = elementRef;
+      this.elementRef = elementRef;
     }
 
     agInit(params: IHeaderParams): void {
-        this.params = params;
-        this.params.column.addEventListener('selectionChanged', this.onSelectionChanged.bind(this));
+      this.params = params;
     }
 
     ngOnDestroy() {
@@ -25,16 +23,13 @@ export class CheckboxHeaderComponent implements OnDestroy, IHeaderAngularComp {
     }
 
     onSelectionChanged() {
-        const selected = this.params.api.getSelectedRows().length;
-        const rows = this.params.api.getDisplayedRowCount();
-        if (selected === rows) {
-          this.params.api.deselectAll();
-          // this.selected = false;
-        } else {
-          this.params.api.selectAll();
-          // this.selected = true;
-        }
-        console.log('click', selected, rows);
+      const selected = this.params.api.getSelectedRows().length;
+      const rows = this.params.api.getDisplayedRowCount();
+      if (selected === rows) {
+        this.params.api.deselectAll();
+      } else {
+        this.params.api.selectAll();
+      }
     }
 
 }
