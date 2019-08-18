@@ -1,15 +1,16 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnDestroy } from '@angular/core';
 import { AgGridAngular } from 'ag-grid-angular';
 import 'ag-grid-enterprise';
 import { CheckboxHeaderComponent } from '../header/checkbox-header.component';
 import { YoutubeService } from '../services/youtube.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-grid-table',
   templateUrl: './grid-table.component.html',
   styleUrls: ['./grid-table.component.css']
 })
-export class GridTableComponent {
+export class GridTableComponent implements OnDestroy {
   @ViewChild('agGrid') agGrid: AgGridAngular;
   gridApi;
   rowData: any;
@@ -18,6 +19,7 @@ export class GridTableComponent {
   isSelectionMode = false;
   selectedRowsLength = 0;
   count;
+  ytSub: Subscription;
 
   frameworkComponents = {
     checkboxHeaderComponent: CheckboxHeaderComponent
@@ -61,6 +63,12 @@ export class GridTableComponent {
   ) {
   }
 
+  ngOnDestroy() {
+    if (this.ytSub) {
+      this.ytSub.unsubscribe();
+    }
+  }
+
   onSelectionChanged() {
     this.selectedRowsLength = this.agGrid.api.getSelectedRows().length;
   }
@@ -74,7 +82,7 @@ export class GridTableComponent {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.youtubeServie.get()
+    this.ytSub = this.youtubeServie.get()
       .subscribe((data: any) => {
         this.rowData = data.items;
 
