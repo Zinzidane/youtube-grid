@@ -39,13 +39,11 @@ export class GridTableComponent implements OnDestroy {
     {
       headerName: 'thumbnails',
       field: 'snippet.thumbnails.default.url',
-      cellRenderer: thumbnailsCellRenderer,
-      suppressContextMenu: true
+      cellRenderer: thumbnailsCellRenderer
     },
     {
       headerName: 'published on',
-      field: 'snippet.publishedAt',
-      suppressContextMenu: true
+      field: 'snippet.publishedAt'
     },
     {
       headerName: 'video title',
