@@ -1,0 +1,17 @@
+<button (click)="selectAll()">Toggle selection mode</button>
+<span>Total rows: {{count}} </span>
+<span>Selected rows: {{selectedRowsLength}}</span>
+<ag-grid-angular
+    #agGrid
+    style="width: 100vw; height: 100vh;"
+    class="ag-theme-balham"
+    [frameworkComponents]="frameworkComponents"
+    suppressRowClickSelection
+    [rowData]="rowData"
+    [columnDefs]="columnDefs"
+    [getContextMenuItems]="getContextMenuItems"
+    rowSelection="multiple"
+    (gridReady)="onGridReady($event)"
+    (selectionChanged)="onSelectionChanged()"
+    >
+</ag-grid-angular>

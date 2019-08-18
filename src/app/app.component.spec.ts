@@ -1,31 +1,44 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AgGridModule } from 'ag-grid-angular';
+import { CheckboxHeaderComponent } from './header/checkbox-header.component';
+import { GridTableComponent } from './grid-table/grid-table.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AppComponent', () => {
+  let fixture, component;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        FormsModule,
+        HttpClientModule,
+        AgGridModule.withComponents([
+          CheckboxHeaderComponent
+        ])
+      ],
       declarations: [
-        AppComponent
+        AppComponent,
+        GridTableComponent,
+        CheckboxHeaderComponent
       ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
   }));
 
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+  it('the application should render', () => {
+    expect(component).toBeDefined();
   });
 
-  it(`should have as title 'youtube-grid'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('youtube-grid');
+  it('the grid cells should be as expected', () => {
+    const appElement = fixture.nativeElement;
+
+    const cellElements = appElement.querySelectorAll('.ag-header-cell');
+    expect(cellElements.length).toEqual(4);
   });
 
-  it('should render title in a h1 tag', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain('Welcome to youtube-grid!');
-  });
 });
